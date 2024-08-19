@@ -4,6 +4,8 @@ import { MatchListRequestCard } from "@/components/match-list-request-card";
 import { PlayerCard } from "@/components/player-card";
 import { PlayerListCard } from "@/components/player-list-card";
 import { VideoCard } from "@/components/video-card";
+import { FeedbackCard } from "@/components/feedback-card";
+import { FeedbackRadarCard } from "@/components/feedback-radar-card";
 
 export default function HomePage() {
   return (
@@ -18,18 +20,15 @@ export default function HomePage() {
       </div>
       <div className="col-span-2 grid items-start gap-6 lg:col-span-1">
         <div className="">
-          <MatchListTabsCard />
-        </div>
-        <div className="">
-          <MatchListRequestCard />
+          <MatchListCard />
         </div>
       </div>
       <div className="col-span-2 grid items-start gap-6 lg:col-span-1">
         <div className="">
           <VideoCard />
         </div>
-        <div className="">
-          <MatchListCard />
+        <div>
+          <FeedbackRadarCard />
         </div>
       </div>
     </div>

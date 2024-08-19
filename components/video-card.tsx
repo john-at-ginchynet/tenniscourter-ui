@@ -5,6 +5,7 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import ReactPlayer from "react-player/lazy";
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
 import Link from "next/link";
+import { AspectRatio } from "@/components/ui/aspect-ratio";
 
 export function VideoCard() {
   return (
@@ -21,32 +22,44 @@ export function VideoCard() {
         >
           <CarouselContent>
             <CarouselItem>
-              <ReactPlayer
-                url="https://www.youtube-nocookie.com/watch?v=bFwOLq5WYJU"
-                width="100%"
-                playing={false}          
-              />              
+              <AspectRatio ratio={16 / 9}>
+                <ReactPlayer
+                  url="https://www.youtube-nocookie.com/watch?v=bFwOLq5WYJU"
+                  width="100%"
+                  height="100%"
+                  playing={false}          
+                />
+              </AspectRatio>              
             </CarouselItem>
             <CarouselItem>
-              <ReactPlayer
-                url="https://www.youtube-nocookie.com/watch?v=r1GYkxKBP0Y"
-                width="100%"
-                playing={false}          
-              />              
+              <AspectRatio ratio={16 / 9}>
+                <ReactPlayer
+                  url="https://www.youtube-nocookie.com/watch?v=r1GYkxKBP0Y"
+                  width="100%"
+                  height="100%"
+                  playing={false}          
+                />
+              </AspectRatio>
             </CarouselItem>
             <CarouselItem>
-              <ReactPlayer
-                url="https://www.youtube-nocookie.com/watch?v=gWB_7BR458E"
-                width="100%"
-                playing={false}          
-              />              
+              <AspectRatio ratio={16 / 9}>
+                <ReactPlayer
+                  url="https://www.youtube-nocookie.com/watch?v=gWB_7BR458E"
+                  width="100%"
+                  height="100%"
+                  playing={false}          
+                />
+              </AspectRatio>              
             </CarouselItem>
             <CarouselItem>
-              <ReactPlayer
-                url="https://www.youtube-nocookie.com/watch?v=LqK6YfcENXQ"
-                width="100%"
-                playing={false}          
-              />              
+              <AspectRatio ratio={16 / 9}>
+                <ReactPlayer
+                  url="https://www.youtube.com/playlist?list=PL7BhBmpnxG_IAVm9NceRUR0vZaRlVePis"
+                  width="100%"
+                  height="100%"
+                  playing={false}          
+                />         
+              </AspectRatio>     
             </CarouselItem>
           </CarouselContent>
           <CarouselPrevious className="absolute left-4" />
