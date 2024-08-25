@@ -28,7 +28,7 @@ export function MainNav() {
               href="/players"
               className={cn(
                 "transition-colors hover:text-foreground/80",
-                pathname === "/players" ? "before:content-['🎾_'] text-foreground" : "text-foreground/60"
+                pathname.startsWith("/players") ? "before:content-['🎾_'] text-foreground" : "text-foreground/60"
               )}
             >
               Players
@@ -37,7 +37,7 @@ export function MainNav() {
               href="/courts"
               className={cn(
                 "transition-colors hover:text-foreground/80",
-                pathname === "/courts" ? "before:content-['🎾_'] text-foreground" : "text-foreground/60"
+                pathname.startsWith("/courts") ? "before:content-['🎾_'] text-foreground" : "text-foreground/60"
               )}
             >
               Courts
@@ -46,7 +46,7 @@ export function MainNav() {
               href="/matches"
               className={cn(
                 "transition-colors hover:text-foreground/80",
-                pathname === "/matches" ? "before:content-['🎾_'] text-foreground" : "text-foreground/60"
+                pathname.startsWith("/matches") ? "before:content-['🎾_'] text-foreground" : "text-foreground/60"
               )}
             >
               Matches
@@ -55,7 +55,7 @@ export function MainNav() {
               href="/improvement"
               className={cn(
                 "transition-colors hover:text-foreground/80",
-                pathname === "/improvement" ? "before:content-['🎾_'] text-foreground" : "text-foreground/60"
+                pathname.startsWith("/improvement") ? "before:content-['🎾_'] text-foreground" : "text-foreground/60"
               )}
             >
               Improvement
@@ -64,7 +64,7 @@ export function MainNav() {
               href="/gear"
               className={cn(
                 "transition-colors hover:text-foreground/80",
-                pathname === "/gear" ? "before:content-['🎾_'] text-foreground" : "text-foreground/60"
+                pathname.startsWith("/gear") ? "before:content-['🎾_'] text-foreground" : "text-foreground/60"
               )}
             >
               Gear

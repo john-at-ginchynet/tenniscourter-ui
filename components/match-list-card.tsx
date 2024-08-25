@@ -27,17 +27,29 @@ export function MatchListCard() {
           <TableBody>
             <TableRow>
               <TableCell>2/2/24</TableCell>
-              <TableCell>Steffi G</TableCell>
+              <TableCell>                
+                <Link className="underline" href="/players/123">
+                  Steffi G
+                </Link>
+              </TableCell>
               <TableCell>Arthur Ashe Stadium</TableCell>
             </TableRow>
             <TableRow>
               <TableCell>2/6/24</TableCell>
-              <TableCell>Jimmy C</TableCell>
+              <TableCell>
+                <Link className="underline" href="/players/456">
+                  Jimmy C
+                </Link>
+              </TableCell>
               <TableCell>BJK Tennis Center</TableCell>
             </TableRow>
             <TableRow>
               <TableCell>**/**/**</TableCell>
-              <TableCell>Carlitos A</TableCell>
+              <TableCell>
+                <Link className="underline" href="/players/789">
+                  Carlitos A
+                </Link>
+              </TableCell>
               <TableCell>BJK Tennis Center</TableCell>
             </TableRow>
           </TableBody>
@@ -54,17 +66,29 @@ export function MatchListCard() {
           <TableBody>
             <TableRow>
               <TableCell>6/17/23</TableCell>
-              <TableCell>Andy M</TableCell>
+              <TableCell>
+                <Link className="underline" href="/players/789">
+                  Andy M
+                </Link>
+              </TableCell>
               <TableCell>6-0 6-0 (Andy M)</TableCell>
             </TableRow>
             <TableRow>
               <TableCell>3/4/23</TableCell>
-              <TableCell>Martina N</TableCell>
+              <TableCell>
+                <Link className="underline" href="/players/789">
+                  Martina N
+                </Link>
+              </TableCell>
               <TableCell>6-0 6-0 (Martina N)</TableCell>
             </TableRow>
             <TableRow>
               <TableCell>1/1/23</TableCell>
-              <TableCell>Wall</TableCell>
+              <TableCell>
+                <Link className="underline" href="/players/789">
+                  Wall
+                </Link>
+              </TableCell>
               <TableCell>6-0 6-0 (Wall)</TableCell>
             </TableRow>
           </TableBody>
