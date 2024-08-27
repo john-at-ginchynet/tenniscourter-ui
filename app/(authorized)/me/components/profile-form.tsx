@@ -2,15 +2,15 @@
 
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { Button } from "@/components/ui/button";
+import { DateTimePicker } from '@/components/ui/datetime-picker';
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
-import { Button } from "@/components/ui/button";
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Label } from "@/components/ui/label";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import { Textarea } from "@/components/ui/textarea";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-
 
 const profileFormSchema = z.object({
   name: z
@@ -28,7 +28,6 @@ const profileFormSchema = z.object({
   bio: z.string().max(160),
   zipcode: z.string().max(10),
   dateOfBirth: z
-    .coerce
     .date()
     .max(new Date())
     .min(new Date("1900-01-01")),
@@ -40,15 +39,11 @@ type ProfileFormValues = z.infer<typeof profileFormSchema>;
 const defaultValues: Partial<ProfileFormValues> = {
   bio: "I am me",
   gender: "U",
-  zipcode: "00000"
+  zipcode: "00000",
+  dateOfBirth: undefined,
 }
 
 export function ProfileForm() {
-
-  const [value, setValue] = useState({ 
-    startDate: null,
-    endDate: null,
-  });   
 
   const form = useForm<ProfileFormValues>({
     resolver: zodResolver(profileFormSchema),
@@ -87,7 +82,8 @@ export function ProfileForm() {
             <FormItem className="flex flex-col w-[240px]">
               <FormLabel>Birthdate</FormLabel>
               <FormControl>
-                <Input type="date" placeholder="Birthdate" {...field} />
+                {/* <Input type="date" placeholder="Birthdate" {...field} /> */}
+                <DateTimePicker displayFormat={{ hour24: 'MM/dd/yyyy' }} granularity="day" yearRangeMinus={100} yearRangePlus={0} value={field.value} onChange={field.onChange} />
               </FormControl>
               <FormMessage />
             </FormItem>
