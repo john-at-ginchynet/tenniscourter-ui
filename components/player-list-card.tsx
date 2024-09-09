@@ -28,9 +28,7 @@ export function PlayerListCard() {
           <TableBody>
             <TableRow>
               <TableCell>
-                <Link className="underline" href="/players/123">
-                  Jen Z
-                </Link>
+                Jen Z
               </TableCell>
               <TableCell>30s, Female, Lefty, One-handed BH</TableCell>
               <TableCell>3.5 USTA</TableCell>
@@ -52,15 +50,18 @@ export function PlayerListCard() {
                         Remove from recommendations...
                       </Link>
                     </DropdownMenuItem>
+                    <DropdownMenuItem>
+                      <Link href="/players/123">
+                        View player...
+                      </Link>
+                    </DropdownMenuItem>
                   </DropdownMenuContent>
                 </DropdownMenu>
               </TableCell>
             </TableRow>
             <TableRow>
               <TableCell>
-                <Link className="underline" href="/players/456">
-                  Milly M
-                </Link>
+                Milly M
               </TableCell>
               <TableCell>20s, Female, Righty, Two-handed BH</TableCell>
               <TableCell>3.5 USTA<br/>23.4 WTN</TableCell>
@@ -82,15 +83,18 @@ export function PlayerListCard() {
                         Remove from recommendations...
                       </Link>
                     </DropdownMenuItem>
+                    <DropdownMenuItem>
+                      <Link href="/players/123">
+                        View player...
+                      </Link>
+                    </DropdownMenuItem>
                   </DropdownMenuContent>
                 </DropdownMenu>
               </TableCell>
             </TableRow>
             <TableRow>
               <TableCell>
-                <Link className="underline" href="/players/789">
                 Boom R
-                </Link>
               </TableCell>
               <TableCell>60s, Male, Lefty, Two-handed BH</TableCell>
               <TableCell>3.0 USTA</TableCell>
@@ -110,6 +114,11 @@ export function PlayerListCard() {
                     <DropdownMenuItem>
                       <Link href="#">
                         Remove from recommendations...
+                      </Link>
+                    </DropdownMenuItem>
+                    <DropdownMenuItem>
+                      <Link href="/players/123">
+                        View player...
                       </Link>
                     </DropdownMenuItem>
                   </DropdownMenuContent>

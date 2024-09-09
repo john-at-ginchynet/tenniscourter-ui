@@ -37,6 +37,12 @@ export function MatchListRequestTable() {
                     Decline match...
                   </Link>
                 </DropdownMenuItem>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem>
+                  <Link href="/players/abc">
+                    View player...
+                  </Link>
+                </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
           </TableCell>
@@ -61,6 +67,12 @@ export function MatchListRequestTable() {
                 <DropdownMenuItem>
                   <Link href="/matches/789">
                     Decline match...
+                  </Link>
+                </DropdownMenuItem>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem>
+                  <Link href="/players/abc">
+                    View player...
                   </Link>
                 </DropdownMenuItem>
               </DropdownMenuContent>
@@ -89,6 +101,12 @@ export function MatchListRequestTable() {
                     Decline match...
                   </Link>
                 </DropdownMenuItem>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem>
+                  <Link href="/players/abc">
+                    View player...
+                  </Link>
+                </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
           </TableCell>
@@ -113,6 +131,12 @@ export function MatchListRequestTable() {
                 <DropdownMenuItem>
                   <Link href="/matches/789">
                     Decline match...
+                  </Link>
+                </DropdownMenuItem>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem>
+                  <Link href="/players/abc">
+                    View player...
                   </Link>
                 </DropdownMenuItem>
               </DropdownMenuContent>

@@ -18,9 +18,7 @@ export function MatchListPendingTable() {
         <TableRow>
           <TableCell>**/**/**</TableCell>
           <TableCell>
-            <Link className="underline" href="/players/789">
-              Carlitos A
-            </Link>
+            Carlitos A
           </TableCell>
           <TableCell>******</TableCell>
           <TableCell>
@@ -34,6 +32,11 @@ export function MatchListPendingTable() {
                 <DropdownMenuItem>
                   <Link href="/matches/789">
                     Schedule match...
+                  </Link>
+                </DropdownMenuItem>
+                <DropdownMenuItem>
+                  <Link href="/players/789">
+                    View player...
                   </Link>
                 </DropdownMenuItem>
               </DropdownMenuContent>
