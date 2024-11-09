@@ -1,8 +1,22 @@
 import { SidebarNav } from "../components/sidebar-nav";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { AccountForm } from "../components/account-form";
 
-export default function MyAccountPage() {
+import { cookies } from "next/headers";
+import { redirect } from "next/navigation";
+import { getAuthorizedUser } from "@/app/actions/auth";
+
+export default async function MyAccountPage() {
+  let user = await getAuthorizedUser(cookies());
+  if (!user) {
+    return redirect("/login");
+  }
   return (
     <div className="hidden items-start justify-center gap-6 rounded-lg p-8 md:grid lg:grid-cols-2 xl:grid-cols-3">
       <div className="col-span-3 grid items-start gap-6">
@@ -10,9 +24,7 @@ export default function MyAccountPage() {
           <Card>
             <CardHeader className="space-y-1 border-b">
               <CardTitle className="text-2xl">My Profile</CardTitle>
-              <CardDescription>
-                This is who I am.
-              </CardDescription>
+              <CardDescription>This is who I am.</CardDescription>
             </CardHeader>
             <CardContent className="grid gap-4 m-0 p-0">
               <div className="flex flex-col lg:flex-row lg:space-y-0 p-0 m-0">
@@ -30,4 +42,4 @@ export default function MyAccountPage() {
       </div>
     </div>
   );
-};
+}

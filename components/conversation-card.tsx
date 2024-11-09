@@ -12,7 +12,7 @@ import { CornerDownLeft } from "lucide-react";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { useEffect, useRef } from "react";
 
-export function ConversationCard() {
+export function ConversationCard({ matchId }) {
 
   const lastMessageRef = useRef(null);
 

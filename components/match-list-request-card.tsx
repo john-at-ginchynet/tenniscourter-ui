@@ -8,7 +8,7 @@ import { MatchListRequestTable } from "./match-list-request-table";
 
 export function MatchListRequestCard() {
   return (
-    <Card>
+    <Card className="h-full">
       <CardHeader className="space-y-1">
         <CardTitle className="text-2xl">Match Requests</CardTitle>
         <CardDescription>
@@ -19,12 +19,6 @@ export function MatchListRequestCard() {
         <MatchListRequestTable />
       </CardContent>
       <CardFooter>
-        <Link
-          href="/matches"
-          className="w-full"
-        >
-          <Button className="w-full">See more...</Button>
-        </Link>
       </CardFooter>
     </Card>
   );

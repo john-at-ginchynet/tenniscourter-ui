@@ -2,8 +2,14 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 import Link from "next/link";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { MoreVertical } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
-export function MatchListPendingTable() {
+export async function MatchListPendingTable() {
+
+  let response = await fetch('http://localhost:3003/api/matches', { cache: 'no-store' });
+  let data = await response.json();
+  let matches = data.matches;  
+
   return(
     <Table>
       <TableHeader>
@@ -15,34 +21,26 @@ export function MatchListPendingTable() {
         </TableRow>
       </TableHeader>
       <TableBody>
-        <TableRow>
-          <TableCell>**/**/**</TableCell>
-          <TableCell>
-            Carlitos A
-          </TableCell>
-          <TableCell>******</TableCell>
-          <TableCell>
-            <DropdownMenu>
-              <DropdownMenuTrigger>
-                <MoreVertical />
-              </DropdownMenuTrigger>
-              <DropdownMenuContent>
-                <DropdownMenuLabel>Actions</DropdownMenuLabel>
-                <DropdownMenuSeparator />
-                <DropdownMenuItem>
-                  <Link href="/matches/789">
-                    Schedule match...
-                  </Link>
-                </DropdownMenuItem>
-                <DropdownMenuItem>
-                  <Link href="/players/789">
-                    View player...
-                  </Link>
-                </DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
-          </TableCell>
-        </TableRow>
+        { matches.map((match) => (
+          <TableRow key={ match.id }>
+            <TableCell>
+              ******
+            </TableCell>
+            <TableCell>
+              <Link className="text-sky-700 underline decoration-dotted" href={ '/players/' + match.side2_player1.id }>
+                { match.side2_player1.name }
+              </Link>
+            </TableCell>
+            <TableCell>
+              ******
+            </TableCell>
+            <TableCell>
+              <Link href={ '/matches/' + match.id }>
+                <Button className="bg-emerald-600 text-white">Schedule match</Button>
+              </Link>
+            </TableCell>
+          </TableRow>
+        ))}
       </TableBody>
     </Table>
   );

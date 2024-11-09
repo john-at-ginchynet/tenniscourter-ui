@@ -10,7 +10,7 @@ import { MatchListRecentTable } from "./match-list-recent-table";
 
 export function MatchListTabsCard() {
   return (
-    <Card>
+    <Card className="h-full">
       <CardHeader className="space-y-1">
         <CardTitle className="text-2xl">My Matches</CardTitle>
         <CardDescription>
@@ -32,12 +32,6 @@ export function MatchListTabsCard() {
         </Tabs>
       </CardContent>
       <CardFooter>
-        <Link
-          href="/matches"
-          className="w-full"
-        >
-          <Button className="w-full">See more...</Button>
-        </Link>
       </CardFooter>
     </Card>
   );

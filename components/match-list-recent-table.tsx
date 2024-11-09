@@ -1,10 +1,45 @@
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 import { MoreVertical } from "lucide-react";
 import Link from "next/link";
+import moment from "moment";
+import { Button } from "@/components/ui/button";
 
-export function MatchListRecentTable() {
-  return(
+function getOpponent(user, player1, player2) {
+  if (user == player1.id) {
+    return player2;
+  }
+  if (user == player2.id) {
+    return player1;
+  }
+  return player1;
+}
+
+export async function MatchListRecentTable({ userId }) {
+  let URL =
+    userId == null
+      ? `http://localhost:3003/api/matches`
+      : `http://localhost:3003/api/users/${userId}/matches`;
+
+  let response = await fetch(URL, { cache: "no-store" });
+  let data = await response.json();
+  let matches = data.matches;
+
+  return (
     <Table>
       <TableHeader>
         <TableRow>
@@ -15,85 +50,38 @@ export function MatchListRecentTable() {
         </TableRow>
       </TableHeader>
       <TableBody>
-        <TableRow>
-          <TableCell>6/17/23</TableCell>
-          <TableCell>Andy M</TableCell>
-          <TableCell>6-0 6-0 (Andy M)</TableCell>
-          <TableCell>
-            <DropdownMenu>
-              <DropdownMenuTrigger>
-                <MoreVertical />
-              </DropdownMenuTrigger>
-              <DropdownMenuContent>
-                <DropdownMenuLabel>Actions</DropdownMenuLabel>
-                <DropdownMenuSeparator />
-                <DropdownMenuItem>
-                  <Link href="/matches/123">
-                    View match...
-                  </Link>
-                </DropdownMenuItem>
-                <DropdownMenuItem>
-                  <Link href="/players/abc">
-                    View player...
-                  </Link>
-                </DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
-          </TableCell>
-        </TableRow>
-        <TableRow>
-          <TableCell>3/4/23</TableCell>
-          <TableCell>Martina N</TableCell>
-          <TableCell>6-0 6-0 (Martina N)</TableCell>
-          <TableCell>
-            <DropdownMenu>
-              <DropdownMenuTrigger>
-                <MoreVertical />
-              </DropdownMenuTrigger>
-              <DropdownMenuContent>
-                <DropdownMenuLabel>Actions</DropdownMenuLabel>
-                <DropdownMenuSeparator />
-                <DropdownMenuItem>
-                  <Link href="/matches/123">
-                    View match...
-                  </Link>
-                </DropdownMenuItem>
-                <DropdownMenuItem>
-                  <Link href="/players/abc">
-                    View player...
-                  </Link>
-                </DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
-          </TableCell>
-        </TableRow>
-        <TableRow>
-          <TableCell>1/1/23</TableCell>
-          <TableCell>Wall</TableCell>
-          <TableCell>6-0 6-0 (Wall)</TableCell>
-          <TableCell>
-            <DropdownMenu>
-              <DropdownMenuTrigger>
-                <MoreVertical />
-              </DropdownMenuTrigger>
-              <DropdownMenuContent>
-                <DropdownMenuLabel>Actions</DropdownMenuLabel>
-                <DropdownMenuSeparator />
-                <DropdownMenuItem>
-                  <Link href="/matches/123">
-                    View match...
-                  </Link>
-                </DropdownMenuItem>
-                <DropdownMenuItem>
-                  <Link href="/players/abc">
-                    View player...
-                  </Link>
-                </DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
-          </TableCell>
-        </TableRow>
+        {matches.map((match) => (
+          <TableRow key={match.id}>
+            <TableCell>{moment(match.date).format("ddd, ll")}</TableCell>
+            <TableCell>
+              <Link
+                className="text-sky-700 underline decoration-dotted"
+                href={
+                  "/players/" +
+                  getOpponent(userId, match.side1_player1, match.side2_player1)
+                    .id
+                }
+              >
+                {
+                  getOpponent(userId, match.side1_player1, match.side2_player1)
+                    .name
+                }
+              </Link>
+            </TableCell>
+            <TableCell>
+              <Link
+                className="text-sky-700 underline decoration-dotted"
+                href={"/matches/" + match.id}
+              >
+                {match.score}
+              </Link>
+            </TableCell>
+            <TableCell>
+              <Button className="bg-emerald-600 text-white">Rematch</Button>
+            </TableCell>
+          </TableRow>
+        ))}
       </TableBody>
     </Table>
   );
-};
+}

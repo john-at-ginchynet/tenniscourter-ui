@@ -10,7 +10,7 @@ import { MatchListRecentTable } from "./match-list-recent-table";
 
 export function MatchListPendingCard() {
   return (
-    <Card>
+    <Card className="h-full">
       <CardHeader className="space-y-1">
         <CardTitle className="text-2xl">Pending Matches</CardTitle>
         <CardDescription>
@@ -21,12 +21,6 @@ export function MatchListPendingCard() {
         <MatchListPendingTable />
       </CardContent>
       <CardFooter>
-        <Link
-          href="/matches"
-          className="w-full"
-        >
-          <Button className="w-full">See more...</Button>
-        </Link>
       </CardFooter>
     </Card>
   );

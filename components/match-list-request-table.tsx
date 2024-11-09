@@ -2,8 +2,14 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { MoreVertical } from "lucide-react";
 import Link from "next/link";
+import { Button } from "@/components/ui/button";
 
-export function MatchListRequestTable() {
+export async function MatchListRequestTable() {
+
+  let response = await fetch('http://localhost:3003/api/matches', { cache: 'no-store' });
+  let data = await response.json();
+  let matches = data.matches;
+
   return(
     <Table>
       <TableHeader>
@@ -15,134 +21,26 @@ export function MatchListRequestTable() {
         </TableRow>
       </TableHeader>
       <TableBody>
-        <TableRow>
-          <TableCell>Roger F</TableCell>
-          <TableCell>42 M</TableCell>
-          <TableCell>Righty One-Hander</TableCell>
-          <TableCell>
-            <DropdownMenu>
-              <DropdownMenuTrigger>
-                <MoreVertical />
-              </DropdownMenuTrigger>
-              <DropdownMenuContent>
-                <DropdownMenuLabel>Actions</DropdownMenuLabel>
-                <DropdownMenuSeparator />
-                <DropdownMenuItem>
-                  <Link href="/matches/789">
-                    Accept match...
-                  </Link>
-                </DropdownMenuItem>
-                <DropdownMenuItem>
-                  <Link href="/matches/789">
-                    Decline match...
-                  </Link>
-                </DropdownMenuItem>
-                <DropdownMenuSeparator />
-                <DropdownMenuItem>
-                  <Link href="/players/abc">
-                    View player...
-                  </Link>
-                </DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
-          </TableCell>
-        </TableRow>
-        <TableRow>
-          <TableCell>Rafael N</TableCell>
-          <TableCell>38 M</TableCell>
-          <TableCell>Lefty Two-Hander</TableCell>
-          <TableCell>
-            <DropdownMenu>
-              <DropdownMenuTrigger>
-                <MoreVertical />
-              </DropdownMenuTrigger>
-              <DropdownMenuContent>
-                <DropdownMenuLabel>Actions</DropdownMenuLabel>
-                <DropdownMenuSeparator />
-                <DropdownMenuItem>
-                  <Link href="/matches/789">
-                    Accept match...
-                  </Link>
-                </DropdownMenuItem>
-                <DropdownMenuItem>
-                  <Link href="/matches/789">
-                    Decline match...
-                  </Link>
-                </DropdownMenuItem>
-                <DropdownMenuSeparator />
-                <DropdownMenuItem>
-                  <Link href="/players/abc">
-                    View player...
-                  </Link>
-                </DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
-          </TableCell>
-        </TableRow>
-        <TableRow>
-          <TableCell>Andy M</TableCell>
-          <TableCell>37 M</TableCell>
-          <TableCell>Righty Two-Hander</TableCell>
-          <TableCell>
-            <DropdownMenu>
-              <DropdownMenuTrigger>
-                <MoreVertical />
-              </DropdownMenuTrigger>
-              <DropdownMenuContent>
-                <DropdownMenuLabel>Actions</DropdownMenuLabel>
-                <DropdownMenuSeparator />
-                <DropdownMenuItem>
-                  <Link href="/matches/789">
-                    Accept match...
-                  </Link>
-                </DropdownMenuItem>
-                <DropdownMenuItem>
-                  <Link href="/matches/789">
-                    Decline match...
-                  </Link>
-                </DropdownMenuItem>
-                <DropdownMenuSeparator />
-                <DropdownMenuItem>
-                  <Link href="/players/abc">
-                    View player...
-                  </Link>
-                </DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
-          </TableCell>
-        </TableRow>
-        <TableRow>
-          <TableCell>Novak D</TableCell>
-          <TableCell>37 M</TableCell>
-          <TableCell>Righty One-Hander</TableCell>
-          <TableCell>
-            <DropdownMenu>
-              <DropdownMenuTrigger>
-                <MoreVertical />
-              </DropdownMenuTrigger>
-              <DropdownMenuContent>
-                <DropdownMenuLabel>Actions</DropdownMenuLabel>
-                <DropdownMenuSeparator />
-                <DropdownMenuItem>
-                  <Link href="/matches/789">
-                    Accept match...
-                  </Link>
-                </DropdownMenuItem>
-                <DropdownMenuItem>
-                  <Link href="/matches/789">
-                    Decline match...
-                  </Link>
-                </DropdownMenuItem>
-                <DropdownMenuSeparator />
-                <DropdownMenuItem>
-                  <Link href="/players/abc">
-                    View player...
-                  </Link>
-                </DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
-          </TableCell>
-        </TableRow>
+        { matches.map((match) => (
+          <TableRow key={ match.id }>
+            <TableCell>
+              <Link className="text-sky-700 underline decoration-dotted" href={ '/players/' + match.side2_player1.id }>
+                { match.side2_player1.name }
+              </Link>
+            </TableCell>
+            <TableCell>
+              { match.side2_player1.gender }
+            </TableCell>
+            <TableCell>
+              { match.side2_player1.handedness } + { match.side2_player1.backhand }
+            </TableCell>
+            <TableCell>
+              <Link href={ '/matches/' + match.id }>
+                <Button className="bg-emerald-600 text-white">Accept match</Button>
+              </Link>
+            </TableCell>
+          </TableRow>
+        ))}
       </TableBody>
     </Table>
   );

@@ -6,7 +6,12 @@ import Link from "next/link";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { Dropdown } from "react-day-picker";
 
-export function PlayerListCard() {
+export async function PlayerListCard({ userId }) {
+
+  let response = await fetch('http://localhost:3003/api/users', { cache: 'no-store' });
+  let data = await response.json();
+  let users = data.users;
+
   return (
     <Card>
       <CardHeader className="space-y-1">
@@ -26,105 +31,26 @@ export function PlayerListCard() {
             </TableRow>
           </TableHeader>
           <TableBody>
-            <TableRow>
-              <TableCell>
-                Jen Z
-              </TableCell>
-              <TableCell>30s, Female, Lefty, One-handed BH</TableCell>
-              <TableCell>3.5 USTA</TableCell>
-              <TableCell>
-                <DropdownMenu>
-                  <DropdownMenuTrigger>
-                    <MoreVertical />
-                  </DropdownMenuTrigger>
-                  <DropdownMenuContent>
-                    <DropdownMenuLabel>Actions</DropdownMenuLabel>
-                    <DropdownMenuSeparator />
-                    <DropdownMenuItem>
-                      <Link href="/players/123/matchRequest">
-                        Request match...
-                      </Link>
-                    </DropdownMenuItem>
-                    <DropdownMenuItem>
-                      <Link href="#">
-                        Remove from recommendations...
-                      </Link>
-                    </DropdownMenuItem>
-                    <DropdownMenuItem>
-                      <Link href="/players/123">
-                        View player...
-                      </Link>
-                    </DropdownMenuItem>
-                  </DropdownMenuContent>
-                </DropdownMenu>
-              </TableCell>
-            </TableRow>
-            <TableRow>
-              <TableCell>
-                Milly M
-              </TableCell>
-              <TableCell>20s, Female, Righty, Two-handed BH</TableCell>
-              <TableCell>3.5 USTA<br/>23.4 WTN</TableCell>
-              <TableCell>
-                <DropdownMenu>
-                  <DropdownMenuTrigger>
-                    <MoreVertical />
-                  </DropdownMenuTrigger>
-                  <DropdownMenuContent>
-                    <DropdownMenuLabel>Actions</DropdownMenuLabel>
-                    <DropdownMenuSeparator />
-                    <DropdownMenuItem>
-                      <Link href="/players/456/matchRequest">
-                        Request match...
-                      </Link>
-                    </DropdownMenuItem>
-                    <DropdownMenuItem>
-                      <Link href="#">
-                        Remove from recommendations...
-                      </Link>
-                    </DropdownMenuItem>
-                    <DropdownMenuItem>
-                      <Link href="/players/123">
-                        View player...
-                      </Link>
-                    </DropdownMenuItem>
-                  </DropdownMenuContent>
-                </DropdownMenu>
-              </TableCell>
-            </TableRow>
-            <TableRow>
-              <TableCell>
-                Boom R
-              </TableCell>
-              <TableCell>60s, Male, Lefty, Two-handed BH</TableCell>
-              <TableCell>3.0 USTA</TableCell>
-              <TableCell>
-                <DropdownMenu>
-                  <DropdownMenuTrigger>
-                    <MoreVertical />
-                  </DropdownMenuTrigger>
-                  <DropdownMenuContent>
-                    <DropdownMenuLabel>Actions</DropdownMenuLabel>
-                    <DropdownMenuSeparator />
-                    <DropdownMenuItem>
-                      <Link href="/players/789/matchRequest">
-                        Request match...
-                      </Link>
-                    </DropdownMenuItem>
-                    <DropdownMenuItem>
-                      <Link href="#">
-                        Remove from recommendations...
-                      </Link>
-                    </DropdownMenuItem>
-                    <DropdownMenuItem>
-                      <Link href="/players/123">
-                        View player...
-                      </Link>
-                    </DropdownMenuItem>
-                  </DropdownMenuContent>
-                </DropdownMenu>
-              </TableCell>
-            </TableRow>
+            { users.filter((user) => user.id != userId).map((user) => (
+              <TableRow key={ user.id }>
+                <TableCell>
+                  <Link className="text-sky-700 underline decoration-dotted" href={ '/players/' + user.id }>
+                    { user.name }
+                  </Link>
+                </TableCell>
+                <TableCell>
+                  { user.gender }, { user.handedness }, { user.backhand }
+                </TableCell>
+                <TableCell>
+                  { user.ntrp } USTA
+                </TableCell>
+                <TableCell>
+                  <Link href={ '/matches/new/' + user.id }>
+                    <Button className="bg-emerald-600 text-white">Request match</Button>
+                  </Link>
+                </TableCell>
+              </TableRow>
+            ))}
           </TableBody>
         </Table>
       </CardContent>

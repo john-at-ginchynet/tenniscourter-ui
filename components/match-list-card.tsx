@@ -4,10 +4,17 @@ import { Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, Tabl
 import Link from "next/link";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { MoreVertical } from "lucide-react";
+import moment from 'moment';
 
-export function MatchListCard() {
+export async function MatchListCard() {
+
+  let response = await fetch(`http://localhost:3003/api/matches`, { cache: 'no-store' });
+  let data = await response.json();
+  let matches = data.matches;
+
   return (
-    <Card>
+
+    <Card className="h-full">
       <CardHeader className="space-y-1">
         <CardTitle className="text-2xl">Match History Summary</CardTitle>
         <CardDescription>
@@ -16,124 +23,6 @@ export function MatchListCard() {
       </CardHeader>
       <CardContent className="grid gap-4">
         <Table>
-          <TableHeader>
-            <TableRow className="border-b border-slate-800 dark:border-white/20">
-              <TableHead colSpan={4}>Upcoming Matches</TableHead>
-            </TableRow>
-            <TableRow className="border-b border-slate-800 dark:border-white/20">
-              <TableHead>Date</TableHead>
-              <TableHead>Opp</TableHead>
-              <TableHead>Location</TableHead>
-              <TableHead></TableHead>
-            </TableRow>
-          </TableHeader>
-          <TableBody>
-            <TableRow>
-              <TableCell>
-                2/2/24
-              </TableCell>
-              <TableCell>                
-                Steffi G
-              </TableCell>
-              <TableCell>Arthur Ashe Stadium</TableCell>
-              <TableCell>
-                <DropdownMenu>
-                  <DropdownMenuTrigger>
-                    <MoreVertical />
-                  </DropdownMenuTrigger>
-                  <DropdownMenuContent>
-                    <DropdownMenuLabel>Actions</DropdownMenuLabel>
-                    <DropdownMenuSeparator />
-                    <DropdownMenuItem>
-                      <Link href="/courts/123">
-                        View court...
-                      </Link>
-                    </DropdownMenuItem>
-                    <DropdownMenuItem>
-                      <Link href="/matches/123">
-                        View match...
-                      </Link>
-                    </DropdownMenuItem>
-                    <DropdownMenuItem>
-                      <Link href="/players/abc">
-                        View player...
-                      </Link>
-                    </DropdownMenuItem>
-                  </DropdownMenuContent>
-                </DropdownMenu>
-              </TableCell>
-            </TableRow>
-            <TableRow>
-              <TableCell>
-                2/6/24
-              </TableCell>
-              <TableCell>
-                Jimmy C
-              </TableCell>
-              <TableCell>BJK Tennis Center</TableCell>
-              <TableCell>
-                <DropdownMenu>
-                  <DropdownMenuTrigger>
-                    <MoreVertical />
-                  </DropdownMenuTrigger>
-                  <DropdownMenuContent>
-                    <DropdownMenuLabel>Actions</DropdownMenuLabel>
-                    <DropdownMenuSeparator />
-                    <DropdownMenuItem>
-                      <Link href="/courts/123">
-                        View court...
-                      </Link>
-                    </DropdownMenuItem>
-                    <DropdownMenuItem>
-                      <Link href="/matches/123">
-                        View match...
-                      </Link>
-                    </DropdownMenuItem>
-                    <DropdownMenuItem>
-                      <Link href="/players/abc">
-                        View player...
-                      </Link>
-                    </DropdownMenuItem>
-                  </DropdownMenuContent>
-                </DropdownMenu>
-              </TableCell>
-            </TableRow>
-            <TableRow>
-              <TableCell>                  
-                **/**/**
-              </TableCell>
-              <TableCell>
-                Carlitos A
-              </TableCell>
-              <TableCell>BJK Tennis Center</TableCell>
-              <TableCell>
-                <DropdownMenu>
-                  <DropdownMenuTrigger>
-                    <MoreVertical />
-                  </DropdownMenuTrigger>
-                  <DropdownMenuContent>
-                    <DropdownMenuLabel>Actions</DropdownMenuLabel>
-                    <DropdownMenuSeparator />
-                    <DropdownMenuItem>
-                      <Link href="/courts/123">
-                        View court...
-                      </Link>
-                    </DropdownMenuItem>
-                    <DropdownMenuItem>
-                      <Link href="/matches/123">
-                        View match...
-                      </Link>
-                    </DropdownMenuItem>
-                    <DropdownMenuItem>
-                      <Link href="/players/abc">
-                        View player...
-                      </Link>
-                    </DropdownMenuItem>
-                  </DropdownMenuContent>
-                </DropdownMenu>
-              </TableCell>
-            </TableRow>
-          </TableBody>
           <TableHeader>
             <TableRow className="border-b border-slate-800 dark:border-white/20">
               <TableHead colSpan={4}>Past Matches</TableHead>
@@ -146,102 +35,26 @@ export function MatchListCard() {
             </TableRow>
           </TableHeader>
           <TableBody>
-            <TableRow>
-              <TableCell>
-                6/17/23
-              </TableCell>
-              <TableCell>
-                Andy M
-              </TableCell>
-              <TableCell>
-                6-0 6-0 (Andy M)
-              </TableCell>
-              <TableCell>
-                <DropdownMenu>
-                  <DropdownMenuTrigger>
-                    <MoreVertical />
-                  </DropdownMenuTrigger>
-                  <DropdownMenuContent>
-                    <DropdownMenuLabel>Actions</DropdownMenuLabel>
-                    <DropdownMenuSeparator />
-                    <DropdownMenuItem>
-                      <Link href="/matches/123">
-                        View match...
-                      </Link>
-                    </DropdownMenuItem>
-                    <DropdownMenuItem>
-                      <Link href="/players/abc">
-                        View player...
-                      </Link>
-                    </DropdownMenuItem>
-                  </DropdownMenuContent>
-                </DropdownMenu>
-              </TableCell>
-            </TableRow>
-            <TableRow>
-              <TableCell>
-                3/4/23
-              </TableCell>
-              <TableCell>
-                Martina N
-              </TableCell>
-              <TableCell>
-                6-0 6-0 (Martina N)
-              </TableCell>
-              <TableCell>
-                <DropdownMenu>
-                  <DropdownMenuTrigger>
-                    <MoreVertical />
-                  </DropdownMenuTrigger>
-                  <DropdownMenuContent>
-                    <DropdownMenuLabel>Actions</DropdownMenuLabel>
-                    <DropdownMenuSeparator />
-                    <DropdownMenuItem>
-                      <Link href="/matches/123">
-                        View match...
-                      </Link>
-                    </DropdownMenuItem>
-                    <DropdownMenuItem>
-                      <Link href="/players/abc">
-                        View player...
-                      </Link>
-                    </DropdownMenuItem>
-                  </DropdownMenuContent>
-                </DropdownMenu>
-              </TableCell>
-            </TableRow>
-            <TableRow>
-              <TableCell>
-                2/2/23
-              </TableCell>
-              <TableCell>
-                Wall
-              </TableCell>
-              <TableCell>
-                6-0 6-0 (Wall)
-              </TableCell>
-              <TableCell>
-                <DropdownMenu>
-                  <DropdownMenuTrigger>
-                    <MoreVertical />
-                  </DropdownMenuTrigger>
-                  <DropdownMenuContent>
-                    <DropdownMenuLabel>Actions</DropdownMenuLabel>
-                    <DropdownMenuSeparator />
-                    <DropdownMenuItem>
-                      <Link href="/matches/123">
-                        View match...
-                      </Link>
-                    </DropdownMenuItem>
-                    <DropdownMenuItem>
-                      <Link href="/players/abc">
-                        View player...
-                      </Link>
-                    </DropdownMenuItem>
-                  </DropdownMenuContent>
-                </DropdownMenu>
-              </TableCell>
-            </TableRow>
+            { matches.map((match) => (
+              <TableRow key={ match.id }>
+                <TableCell>
+                  { moment(match.date).format('ddd, ll') }
+                </TableCell>
+                <TableCell>
+                  <Link className="text-sky-700 underline decoration-dotted" href={ '/players/' + match.side2_player1.id }>
+                    { match.side2_player1.name }
+                  </Link>
+                </TableCell>
+                <TableCell>
+                  <Link className="text-sky-700 underline decoration-dotted" href={ '/matches/' + match.id }>
+                    { match.score }
+                  </Link>
+                </TableCell>
+                <TableCell>
+                  <Button className="bg-emerald-600 text-white">Rematch</Button>
+                </TableCell>
+              </TableRow>
+            ))}
           </TableBody>
         </Table>
       </CardContent>

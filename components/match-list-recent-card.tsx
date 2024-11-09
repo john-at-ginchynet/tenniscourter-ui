@@ -8,9 +8,10 @@ import { MatchListUpcomingTable } from "./match-list-upcoming-table";
 import { MatchListPendingTable } from "./match-list-pending-table";
 import { MatchListRecentTable } from "./match-list-recent-table";
 
-export function MatchListRecentCard() {
+export function MatchListRecentCard({ userId }) {
+
   return (
-    <Card>
+    <Card className="h-full">
       <CardHeader className="space-y-1">
         <CardTitle className="text-2xl">Recent Matches</CardTitle>
         <CardDescription>
@@ -18,15 +19,9 @@ export function MatchListRecentCard() {
         </CardDescription>
       </CardHeader>
       <CardContent className="grid gap-4">
-        <MatchListRecentTable />
+        <MatchListRecentTable userId={ userId } />
       </CardContent>
       <CardFooter>
-        <Link
-          href="/matches"
-          className="w-full"
-        >
-          <Button className="w-full">See more...</Button>
-        </Link>
       </CardFooter>
     </Card>
   );

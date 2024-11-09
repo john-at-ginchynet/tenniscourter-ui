@@ -3,9 +3,9 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import Link from "next/link";
 import { MatchListUpcomingTable } from "./match-list-upcoming-table";
 
-export function MatchListUpcomingCard() {
+export function MatchListUpcomingCard({ userId }) {
   return (
-    <Card>
+    <Card className="h-full">
       <CardHeader className="space-y-1">
         <CardTitle className="text-2xl">Upcoming Matches</CardTitle>
         <CardDescription>
@@ -13,15 +13,9 @@ export function MatchListUpcomingCard() {
         </CardDescription>
       </CardHeader>
       <CardContent className="grid gap-4">        
-        <MatchListUpcomingTable />
+        <MatchListUpcomingTable userId={ userId } />
       </CardContent>
       <CardFooter>
-        <Link
-          href="/matches"
-          className="w-full"
-        >
-          <Button className="w-full">See more...</Button>
-        </Link>
       </CardFooter>
     </Card>
   );
