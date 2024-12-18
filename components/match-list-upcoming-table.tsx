@@ -18,6 +18,8 @@ import { MoreVertical } from "lucide-react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import moment from "moment";
+import { getSessionCookie } from "@/app/actions/auth";
+import { cookies } from "next/headers";
 
 function getOpponent(user, player1, player2) {
   if (user == player1.id) {
@@ -32,10 +34,18 @@ function getOpponent(user, player1, player2) {
 export async function MatchListUpcomingTable({ userId }) {
   let URL =
     userId == null
-      ? `http://localhost:3003/api/matches`
-      : `http://localhost:3003/api/users/${userId}/matches`;
+      ? `http://localhost:3003/api/matches/upcoming`
+      : `http://localhost:3003/api/users/${userId}/matches/upcoming`;
 
-  let response = await fetch(URL, { cache: "no-store" });
+  let sessionCookie = await getSessionCookie(cookies());
+  let response = await fetch(URL, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      Cookie: sessionCookie,
+    },
+    cache: "no-store",
+  });
   let data = await response.json();
   let matches = data.matches;
 
@@ -50,9 +60,19 @@ export async function MatchListUpcomingTable({ userId }) {
         </TableRow>
       </TableHeader>
       <TableBody>
-        {matches.map((match) => (
+        {matches?.map((match) => (
           <TableRow key={match.id}>
-            <TableCell>{moment(match.date).format("ddd, ll")}</TableCell>
+            <TableCell>
+              {match?.date ? (
+                moment(match.date).format("ddd, ll")
+              ) : (
+                <Link href={"/matches/" + match.id}>
+                  <Button className="bg-emerald-600 text-white">
+                    Schedule
+                  </Button>
+                </Link>
+              )}
+            </TableCell>
             <TableCell>
               <Link
                 className="text-sky-700 underline decoration-dotted"
@@ -69,12 +89,20 @@ export async function MatchListUpcomingTable({ userId }) {
               </Link>
             </TableCell>
             <TableCell>
-              <Link
-                className="text-sky-700 underline decoration-dotted"
-                href={"/courts/" + match.location}
-              >
-                {match.location}
-              </Link>
+              {match?.location ? (
+                <Link
+                  className="text-sky-700 underline decoration-dotted"
+                  href={"/courts/" + match.location}
+                >
+                  {match.location}
+                </Link>
+              ) : (
+                <Link href={"/matches/" + match.id}>
+                  <Button className="bg-emerald-600 text-white">
+                    Set location
+                  </Button>
+                </Link>
+              )}
             </TableCell>
             <TableCell>
               <Link href={"/matches/" + match.id}>

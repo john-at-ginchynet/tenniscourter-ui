@@ -16,11 +16,11 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Badge } from "@/components/ui/badge";
 
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import { getAuthorizedUser } from "@/app/actions/auth";
-import { Badge } from "@/components/ui/badge";
 
 export default async function HomePage() {
   let user = await getAuthorizedUser(cookies());
@@ -31,19 +31,19 @@ export default async function HomePage() {
   return (
     <>
       <div className="grid grid-cols-9 gap-4 p-4">
-        <div className="col-span-2">
-          <p className="flex justify-center items-center">
-            <Avatar className="w-1/2 h-auto border-4 border-white object-center">
+        <div className="col-span-2 place-content-center">
+          <div className="flex justify-center items-center">
+            <Avatar className="w-3/4 h-auto border-4 border-white object-center">
               <AvatarImage src="https://github.com/shadcn.png" />
               <AvatarFallback>{user?.name}</AvatarFallback>
             </Avatar>
-          </p>
-          <p className="pt-2 text-center text-white text-3xl font-semibold leading-none tracking-tight">
+          </div>
+          <div className="pt-2 text-center text-white text-3xl font-semibold leading-none tracking-tight">
             {user?.name}
-          </p>
-          <p className="pt-2 text-center text-white text-xl font-semibold leading-none tracking-tight">
+          </div>
+          <div className="pt-2 text-center text-white text-xl font-semibold leading-none tracking-tight">
             {user?.location}
-          </p>
+          </div>
         </div>
         <div className="col-span-2">
           <Card className="h-full">
@@ -197,6 +197,11 @@ export default async function HomePage() {
         </div>
         <div className="col-span-3">
           <PlayerListCard userId={user?.id} />
+        </div>
+      </div>
+      <div className="grid grid-cols-9 gap-4 p-4">
+        <div className="col-span-6">
+          <MatchListRecentCard userId={user?.id} />
         </div>
       </div>
     </>

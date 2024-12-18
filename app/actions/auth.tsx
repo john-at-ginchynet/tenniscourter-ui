@@ -30,3 +30,9 @@ export async function getAuthorizedUser(cookies: ReadonlyRequestCookies) {
 
   return user;
 }
+
+export async function getSessionCookie(cookies: ReadonlyRequestCookies) {
+  const sessionCookie = cookies.get("session");
+  console.log("getSessionCookie: " + sessionCookie?.value);
+  return sessionCookie?.value;
+}

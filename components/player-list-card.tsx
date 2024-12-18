@@ -1,14 +1,45 @@
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
 import { MoreVertical } from "lucide-react";
 import Link from "next/link";
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 import { Dropdown } from "react-day-picker";
+import { getAuthorizedUser, getSessionCookie } from "@/app/actions/auth";
+import { cookies } from "next/headers";
+import { redirect } from "next/navigation";
 
 export async function PlayerListCard({ userId }) {
-
-  let response = await fetch('http://localhost:3003/api/users', { cache: 'no-store' });
+  let sessionCookie = await getSessionCookie(cookies());
+  let response = await fetch("http://localhost:3003/api/users", {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      Cookie: sessionCookie,
+    },
+    cache: "no-store",
+  });
   let data = await response.json();
   let users = data.users;
 
@@ -31,37 +62,39 @@ export async function PlayerListCard({ userId }) {
             </TableRow>
           </TableHeader>
           <TableBody>
-            { users.filter((user) => user.id != userId).map((user) => (
-              <TableRow key={ user.id }>
-                <TableCell>
-                  <Link className="text-sky-700 underline decoration-dotted" href={ '/players/' + user.id }>
-                    { user.name }
-                  </Link>
-                </TableCell>
-                <TableCell>
-                  { user.gender }, { user.handedness }, { user.backhand }
-                </TableCell>
-                <TableCell>
-                  { user.ntrp } USTA
-                </TableCell>
-                <TableCell>
-                  <Link href={ '/matches/new/' + user.id }>
-                    <Button className="bg-emerald-600 text-white">Request match</Button>
-                  </Link>
-                </TableCell>
-              </TableRow>
-            ))}
+            {users
+              ?.filter((user) => user.id != userId)
+              .map((user) => (
+                <TableRow key={user.id}>
+                  <TableCell>
+                    <Link
+                      className="text-sky-700 underline decoration-dotted"
+                      href={"/players/" + user.id}
+                    >
+                      {user.name}
+                    </Link>
+                  </TableCell>
+                  <TableCell>
+                    {user.gender}, {user.handedness}, {user.backhand}
+                  </TableCell>
+                  <TableCell>{user.ntrp} USTA</TableCell>
+                  <TableCell>
+                    <Link href={"/matches/new/" + user.id}>
+                      <Button className="bg-emerald-600 text-white">
+                        Request match
+                      </Button>
+                    </Link>
+                  </TableCell>
+                </TableRow>
+              ))}
           </TableBody>
         </Table>
       </CardContent>
       <CardFooter>
-        <Link
-          href="/players"
-          className="w-full"
-        >
+        <Link href="/players" className="w-full">
           <Button className="w-full">See more...</Button>
         </Link>
       </CardFooter>
     </Card>
   );
-};
+}

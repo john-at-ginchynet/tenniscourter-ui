@@ -1,16 +1,44 @@
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
 import Link from "next/link";
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 import { MoreVertical } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { getSessionCookie } from "@/app/actions/auth";
+import { cookies } from "next/headers";
 
-export async function MatchListPendingTable() {
+export async function MatchListPendingTable({ userId }) {
+  let URL =
+    userId == null
+      ? `http://localhost:3003/api/matches/pending`
+      : `http://localhost:3003/api/users/${userId}/matches/pending`;
 
-  let response = await fetch('http://localhost:3003/api/matches', { cache: 'no-store' });
+  let sessionCookie = await getSessionCookie(cookies());
+  let response = await fetch(URL, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      Cookie: sessionCookie,
+    },
+    cache: "no-store",
+  });
   let data = await response.json();
-  let matches = data.matches;  
+  let matches = data.matches;
 
-  return(
+  return (
     <Table>
       <TableHeader>
         <TableRow className="border-b border-slate-800 dark:border-white/20">
@@ -21,22 +49,23 @@ export async function MatchListPendingTable() {
         </TableRow>
       </TableHeader>
       <TableBody>
-        { matches.map((match) => (
-          <TableRow key={ match.id }>
+        {matches?.map((match) => (
+          <TableRow key={match.id}>
+            <TableCell>******</TableCell>
             <TableCell>
-              ******
-            </TableCell>
-            <TableCell>
-              <Link className="text-sky-700 underline decoration-dotted" href={ '/players/' + match.side2_player1.id }>
-                { match.side2_player1.name }
+              <Link
+                className="text-sky-700 underline decoration-dotted"
+                href={"/players/" + match.side2_player1.id}
+              >
+                {match.side2_player1.name}
               </Link>
             </TableCell>
+            <TableCell>******</TableCell>
             <TableCell>
-              ******
-            </TableCell>
-            <TableCell>
-              <Link href={ '/matches/' + match.id }>
-                <Button className="bg-emerald-600 text-white">Schedule match</Button>
+              <Link href={"/matches/" + match.id}>
+                <Button className="bg-emerald-600 text-white">
+                  Schedule match
+                </Button>
               </Link>
             </TableCell>
           </TableRow>
@@ -44,4 +73,4 @@ export async function MatchListPendingTable() {
       </TableBody>
     </Table>
   );
-};
+}

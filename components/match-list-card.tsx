@@ -1,25 +1,58 @@
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
-import { Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import {
+  Table,
+  TableBody,
+  TableCaption,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
 import Link from "next/link";
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 import { MoreVertical } from "lucide-react";
-import moment from 'moment';
+import moment from "moment";
+import { getSessionCookie } from "@/app/actions/auth";
+import { cookies } from "next/headers";
 
-export async function MatchListCard() {
+export async function MatchListCard({ userId }) {
+  let URL =
+    userId == null
+      ? `http://localhost:3003/api/matches`
+      : `http://localhost:3003/api/users/${userId}/matches`;
 
-  let response = await fetch(`http://localhost:3003/api/matches`, { cache: 'no-store' });
+  let sessionCookie = await getSessionCookie(cookies());
+  let response = await fetch(URL, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      Cookie: sessionCookie,
+    },
+    cache: "no-store",
+  });
   let data = await response.json();
   let matches = data.matches;
 
   return (
-
     <Card className="h-full">
       <CardHeader className="space-y-1">
         <CardTitle className="text-2xl">Match History Summary</CardTitle>
-        <CardDescription>
-          Small blurb about match history...
-        </CardDescription>
+        <CardDescription>Small blurb about match history...</CardDescription>
       </CardHeader>
       <CardContent className="grid gap-4">
         <Table>
@@ -35,19 +68,23 @@ export async function MatchListCard() {
             </TableRow>
           </TableHeader>
           <TableBody>
-            { matches.map((match) => (
-              <TableRow key={ match.id }>
+            {matches?.map((match) => (
+              <TableRow key={match.id}>
+                <TableCell>{moment(match.date).format("ddd, ll")}</TableCell>
                 <TableCell>
-                  { moment(match.date).format('ddd, ll') }
-                </TableCell>
-                <TableCell>
-                  <Link className="text-sky-700 underline decoration-dotted" href={ '/players/' + match.side2_player1.id }>
-                    { match.side2_player1.name }
+                  <Link
+                    className="text-sky-700 underline decoration-dotted"
+                    href={"/players/" + match.side2_player1.id}
+                  >
+                    {match.side2_player1.name}
                   </Link>
                 </TableCell>
                 <TableCell>
-                  <Link className="text-sky-700 underline decoration-dotted" href={ '/matches/' + match.id }>
-                    { match.score }
+                  <Link
+                    className="text-sky-700 underline decoration-dotted"
+                    href={"/matches/" + match.id}
+                  >
+                    {match.score}
                   </Link>
                 </TableCell>
                 <TableCell>
@@ -59,13 +96,10 @@ export async function MatchListCard() {
         </Table>
       </CardContent>
       <CardFooter>
-        <Link
-          href="/matches"
-          className="w-full"
-        >
+        <Link href="/matches" className="w-full">
           <Button className="w-full">See more...</Button>
         </Link>
       </CardFooter>
     </Card>
   );
-};
+}

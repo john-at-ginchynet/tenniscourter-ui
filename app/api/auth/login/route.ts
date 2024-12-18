@@ -22,7 +22,7 @@ export async function POST(request: NextRequest) {
     const fiveMinutes = 5 * 60 * 1000;
     cookies().set("session", cookieVal, {
       httpOnly: true,
-      expires: Date.now() + fiveMinutes,
+      expires: Date.now() + oneHour,
     });
     // console.log("api/auth/login >> getCookieSession: " + cookies().get("session")?.toString());
     return new Response(null, { status: 200 });

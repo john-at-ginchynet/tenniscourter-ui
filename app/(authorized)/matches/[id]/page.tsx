@@ -13,7 +13,7 @@ import moment from "moment";
 
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
-import { getAuthorizedUser } from "@/app/actions/auth";
+import { getAuthorizedUser, getSessionCookie } from "@/app/actions/auth";
 
 export default async function MatchPage({
   params,
@@ -25,7 +25,13 @@ export default async function MatchPage({
     return redirect("/login");
   }
 
+  let sessionCookie = await getSessionCookie(cookies());
   let response = await fetch(`http://localhost:3003/api/matches/${params.id}`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      Cookie: sessionCookie,
+    },
     cache: "no-store",
   });
   let data = await response.json();
@@ -74,9 +80,11 @@ export default async function MatchPage({
           <CardContent className="bg-white pt-5">
             <div className="flex items-stretch">
               <div className="w-1/2 text-left">
-                {moment(match.date).format("ll h:mma")}
+                {match?.date && moment(match.date).format("ddd, ll")}
               </div>
-              <div className="w-1/2 text-right">@{match.location}</div>
+              <div className="w-1/2 text-right">
+                {match?.date && "@" + match.location}
+              </div>
             </div>
           </CardContent>
         </Card>
@@ -91,14 +99,21 @@ export default async function MatchPage({
             </CardTitle>
           </CardHeader>
           <CardContent className="bg-white pt-5">
-            <div className="flex items-stretch">
-              <div className="w-1/2 text-left">{match.score}</div>
-              <div className="w-1/2 text-right">
-                {match.winningSide == 1
-                  ? match.side1_player1.name
-                  : match.side2_player1.name}
+            {match.score && match.winningSide ? (
+              <div className="flex items-stretch">
+                <div className="w-1/2 text-left">{match.score}</div>
+                <div className="w-1/2 text-right">
+                  {match.winningSide == 1 && match.side1_player1.name}
+                  {match.winningSide == 2 && match.side2_player1.name}
+                </div>
               </div>
-            </div>
+            ) : (
+              <div className="flex items-stretch place-content-center">
+                <Button className="bg-emerald-600 text-white w-full">
+                  Complete match
+                </Button>
+              </div>
+            )}
           </CardContent>
         </Card>
       </div>

@@ -18,6 +18,8 @@ import { MoreVertical } from "lucide-react";
 import Link from "next/link";
 import moment from "moment";
 import { Button } from "@/components/ui/button";
+import { getSessionCookie } from "@/app/actions/auth";
+import { cookies } from "next/headers";
 
 function getOpponent(user, player1, player2) {
   if (user == player1.id) {
@@ -35,7 +37,15 @@ export async function MatchListRecentTable({ userId }) {
       ? `http://localhost:3003/api/matches`
       : `http://localhost:3003/api/users/${userId}/matches`;
 
-  let response = await fetch(URL, { cache: "no-store" });
+  let sessionCookie = await getSessionCookie(cookies());
+  let response = await fetch(URL, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      Cookie: sessionCookie,
+    },
+    cache: "no-store",
+  });
   let data = await response.json();
   let matches = data.matches;
 
@@ -50,7 +60,7 @@ export async function MatchListRecentTable({ userId }) {
         </TableRow>
       </TableHeader>
       <TableBody>
-        {matches.map((match) => (
+        {matches?.map((match) => (
           <TableRow key={match.id}>
             <TableCell>{moment(match.date).format("ddd, ll")}</TableCell>
             <TableCell>
